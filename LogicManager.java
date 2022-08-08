@@ -1,3 +1,5 @@
+import java.util.stream.IntStream;
+
 public class LogicManager {
     private ToDoList tdList = new ToDoList();
 
@@ -24,9 +26,13 @@ public class LogicManager {
     }
 
     private String parseArgument(String input) {
-        return IntStream.range(1, input.split(" ").length - 1)
-            .mapToObj(x => input.split(" ")[x])
-            .toArray(String[]::new).join(" "); 
+        String arg = "";
+
+        for (int i = 1; i < input.split(" ").length; ++i) {
+            arg += input.split(" ")[i] + " ";
+        }
+        
+        return arg;
     }
 
     private String processAddCommand(String argument) {
@@ -35,17 +41,17 @@ public class LogicManager {
     }
 
     private String processDeleteCommand(String argument) {
-        tdList.delete(argument.strip().toInt());
+        tdList.delete(Integer.parseInt(argument.strip()));
         return tdList.formattedOutput();
     }
 
     private String processMarkCommand(String argument) {
-        tdList.mark(argument.strip().toInt());
+        tdList.mark(Integer.parseInt(argument.strip()));
         return tdList.formattedOutput();
     }
 
     private String processUnmarkCommand(String argument) {
-        tdList.unmark(argument.strip().toInt());
+        tdList.unmark(Integer.parseInt(argument.strip()));
         return tdList.formattedOutput();
     }
 
